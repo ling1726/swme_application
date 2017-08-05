@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>at.ac.tuwien.inso</groupId>
+    <artifactId>swme</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>swme</name>
+    <description>swme lab assignment 2</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.4.7.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <modules>
+        <module>swme_domain</module>
+        <module>swme_app</module>
+    </modules>
+
+    <properties>
+        <!-- ==================== BUILD SETTINGS ==================== -->
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+
+        <project.build.finalname>swme</project.build.finalname>
+        <outputDir>webapps</outputDir>
+
+        <!-- ==================== DEPENDENCY VERSIONS ==================== -->
+
+        <spring-boot-maven-plugin.version>1.4.4.RELEASE</spring-boot-maven-plugin.version>
+
+        <vaadin.version>7.7.7</vaadin.version>
+        <vaadin-spring-boot-starter.version>1.2.0</vaadin-spring-boot-starter.version>
+
+        <maven-war-plugin.version>3.1.0</maven-war-plugin.version>
+        <maven-jar-plugin.version>3.0.2</maven-jar-plugin.version>
+        <maven-resources-plugin.version>2.7</maven-resources-plugin.version>
+        <flyway-maven-plugin.version>4.2.0</flyway-maven-plugin.version>
+
+        <commons-lang.version>3.0</commons-lang.version>
+
+        <!-- ==================== SPRING PRODUCTION PROPERTIES ==================== -->
+
+        <!-- These properties are dynamically injected using the maven-maven-resources-plugin. 
+             Make sure to rebuilding/redeploying after changing values.                          -->
+
+        <!-- Necessary for Spring Boot JAR packaging -->
+        <start-class>at.ac.tuwien.inso.StandaloneApplication</start-class>
+
+        <spring.datasource.url>jdbc:postgresql://postgres:5432/swme</spring.datasource.url>
+        <spring.datasource.username>postgres</spring.datasource.username>
+        <spring.datasource.password>postgres</spring.datasource.password>
+        <spring.datasource.driver-class-name>org.postgresql.Driver</spring.datasource.driver-class-name>
+        <spring.jpa.show-sql>org.postgresql.Driver</spring.jpa.show-sql>
+
+        <spring.jpa.show-sql>true</spring.jpa.show-sql>
+        <spring.jpa.hibernate.ddl-auto>none</spring.jpa.hibernate.ddl-auto>
+
+        <flyway.locations>db/migration</flyway.locations>
+        <!-- Disable this flag to turn off automatic migrations at startup -->
+        <flyway.enabled>true</flyway.enabled>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.restdocs</groupId>
+            <artifactId>spring-restdocs-mockmvc</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-spring-boot-starter</artifactId>
+            <version>${vaadin-spring-boot-starter.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${commons-lang.version}</version>
+        </dependency>
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-bom</artifactId>
+                <version>${vaadin.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <profiles>
+        <!-- ==================== JAR PROFILE ==================== -->
+        <profile>
+            <id>jar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <finalName>${project.build.finalname}</finalName>
+            </build>
+            <properties>
+                <packaging.type>jar</packaging.type>
+            </properties>
+        </profile>
+
+        <!-- ==================== WAR PROFILE ==================== -->
+        <profile>
+            <id>war</id>
+            <properties>
+                <packaging.type>war</packaging.type>
+            </properties>
+            <build>
+                <finalName>${project.build.finalname}</finalName>
+            </build>
+            <dependencies>
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                    <scope>provided</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
+    <build>
+        <plugins>
+            <!-- Use 'mvn flyway:migrate' to migrate manually -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway-maven-plugin.version}</version>
+                <configuration>
+                    <locations>
+                        <location>filesystem:src/main/resources/migrations</location>
+                    </locations>
+                    <driver>org.postgresql.Driver</driver>
+                    <url>jdbc:postgresql://localhost:5432/swme</url>
+                    <user>postgres</user>
+                    <password>postgres</password>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>8.3-603.jdbc3</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+        </plugins>
+    </build>
+
+
+</project>

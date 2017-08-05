@@ -1,0 +1,2 @@
+-- drop age column
+ALTER TABLE PERSON DROP COLUMN AGE;

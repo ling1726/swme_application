@@ -1,0 +1,108 @@
+:toc: right
+
+[[overview]]
+= Rest API Documentation for SWME
+
+[[resources-people]]
+== People
+
+The People resource is used to create and list people(persons).
+
+[[resources-person-list]]
+=== Listing persons
+
+A `GET` request will list all of the java.at.ac.tuwien.inso.java.ac.at.tuwien.inso.service's persons.
+include::{snippets}/index/curl-request.adoc[]
+
+The following JSON object is returned
+include::{snippets}/index/http-response.adoc[]
+
+include::{snippets}/index/response-fields.adoc[]
+
+[[resources-person-filter]]
+=== Filtering persons
+
+A `GET` request will filter all of the java.at.ac.tuwien.inso.java.ac.at.tuwien.inso.service's persons with given parameters.
+include::{snippets}/filter-person/curl-request.adoc[]
+
+The following parameters are accepted
+include::{snippets}/filter-person/request-parameters.adoc[]
+
+The following JSON object is returned
+include::{snippets}/filter-person/http-response.adoc[]
+
+include::{snippets}/filter-person/response-fields.adoc[]
+
+[[resources-fetch-person]]
+=== Fetch a person
+A `GET` request with the person's id.
+include::{snippets}/get-person/curl-request.adoc[]
+
+The following path parameters are required
+include::{snippets}/get-person/path-parameters.adoc[]
+
+The following JSON object is returned
+include::{snippets}/get-person/http-response.adoc[]
+include::{snippets}/get-person/response-fields.adoc[]
+
+[[resources-delete-person]]
+=== Delete a person
+A `DELETE` request with the person's id.
+include::{snippets}/delete-person/curl-request.adoc[]
+
+The following path parameters are required
+include::{snippets}/delete-person/path-parameters.adoc[]
+
+The following JSON object is returned
+include::{snippets}/delete-person/http-response.adoc[]
+include::{snippets}/delete-person/response-fields.adoc[]
+
+[[resources-create-person]]
+=== Create a person
+A `POST` request with the person's fields.
+include::{snippets}/create-person/curl-request.adoc[]
+
+The following path parameters are required
+include::{snippets}/create-person/request-fields.adoc[]
+
+The following JSON object is returned
+include::{snippets}/create-person/http-response.adoc[]
+include::{snippets}/create-person/response-fields.adoc[]
+
+[[resources-update-person]]
+=== Update a person
+A `PUT` request with the person's fields.
+include::{snippets}/update-person/curl-request.adoc[]
+
+The following path parameters are required
+include::{snippets}/update-person/request-fields.adoc[]
+
+The following JSON object is returned
+include::{snippets}/update-person/http-response.adoc[]
+include::{snippets}/update-person/response-fields.adoc[]
+
+[[resources-countries]]
+== Countries
+
+[[resources-countries-list]]
+=== Listing countries
+
+A `GET` request will list all of the java.at.ac.tuwien.inso.java.ac.at.tuwien.inso.service's countries.
+include::{snippets}/list-countries/curl-request.adoc[]
+
+The following JSON object is returned
+include::{snippets}/list-countries/http-response.adoc[]
+include::{snippets}/list-countries/response-fields.adoc[]
+
+[[resources-titles]]
+== Titles
+
+[[resources-titles-list]]
+=== Listing titles
+
+A `GET` request will list all of the java.at.ac.tuwien.inso.java.ac.at.tuwien.inso.service's titles.
+include::{snippets}/list-titles/curl-request.adoc[]
+
+The following JSON object is returned
+include::{snippets}/list-titles/http-response.adoc[]
+include::{snippets}/list-titles/response-fields.adoc[]
